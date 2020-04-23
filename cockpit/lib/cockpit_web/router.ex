@@ -11,6 +11,7 @@ defmodule CockpitWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug CockpitWeb.Auth.RequestSigningPlug
   end
 
   scope "/", CockpitWeb do
