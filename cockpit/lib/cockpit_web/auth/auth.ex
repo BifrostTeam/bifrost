@@ -3,12 +3,12 @@ defmodule CockpitWeb.Auth do
     quote location: :keep do
       case unquote(conn).assigns do
         %{auth: :error} = _assigns ->
-          put_status(unquote(conn), 401) |> put_view(CockpitWeb.ErrorView) |> render("api_error.json", %{msg: "Auth error"}) |> halt
+          raise CockpitWeb.Auth.AuthorizationError, plug_status: 401
         %{auth: _role_id, auth_policy: policy_document} = _assigns ->
           case CockpitWeb.Auth.validate_role_policy(policy_document, unquote(endpoint), unquote(sub_resource), unquote(action)) do
             true ->
               unquote(body[:do])
-            _ -> put_status(unquote(conn), 403) |> put_view(CockpitWeb.ErrorView) |> render("api_error.json", %{msg: "Forbidden"}) |> halt
+            _ -> raise CockpitWeb.Auth.AuthorizationError, plug_status: 403
           end
       end
     end

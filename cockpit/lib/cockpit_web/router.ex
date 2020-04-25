@@ -14,10 +14,21 @@ defmodule CockpitWeb.Router do
     plug CockpitWeb.Auth.RequestSigningPlug
   end
 
+  pipeline :dashboard do
+    plug CockpitWeb.Auth.LoginRequired
+  end
+
   scope "/", CockpitWeb do
     pipe_through :browser
 
     get "/", PageController, :index
+    post "/", PageController, :login
+
+    scope "/dashboard", nil do
+      pipe_through :dashboard
+
+      get "/", DashboardController, :index
+    end
   end
 
   scope "/api", CockpitWeb.API do

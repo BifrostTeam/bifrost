@@ -14,7 +14,11 @@ defmodule CockpitWeb.ErrorView do
     Phoenix.Controller.status_message_from_template(template)
   end
 
-  def render("api_error.json", %{msg: msg}) do
-    %{error: msg}
+  def render("401.json", _assigns) do
+    %{error: "401 Unauthorized"}
+  end
+
+  def render("403.json", _assigns) do
+    %{error: "403 Forbidden"}
   end
 end

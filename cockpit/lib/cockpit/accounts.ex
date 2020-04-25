@@ -35,7 +35,7 @@ defmodule Cockpit.Accounts do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user!(id), do: Repo.get!(User, id)
+  def get_user!(id), do: Repo.one!(from u in User, where: u.id == ^id, preload: :role)
 
   @doc """
   Creates a user.
@@ -196,5 +196,9 @@ defmodule Cockpit.Accounts do
   """
   def change_user_role(%UserRole{} = user_role) do
     UserRole.changeset(user_role, %{})
+  end
+
+  def get_user_by_username(username) do
+    Repo.one(from u in Cockpit.Accounts.User, where: u.name == ^username)
   end
 end
