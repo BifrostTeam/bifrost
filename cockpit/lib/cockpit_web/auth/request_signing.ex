@@ -25,7 +25,7 @@ defmodule CockpitWeb.Auth.RequestSigningPlug do
               assign(conn, :auth, :error)
             api_key ->
               gen_sig = :crypto.mac(:hmac, :sha3_256, api_key.key, signed_params)
-              if Base.encode16(gen_sig) == signature do
+              if String.downcase(Base.encode16(gen_sig)) == signature do
                 conn
                 |> assign(:auth, api_key.role_id)
                 |> assign(:auth_policy, Roles.get_policy_document(api_key.role_id))
