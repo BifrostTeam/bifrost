@@ -5,6 +5,7 @@ defmodule Cockpit.Roles.Role do
   schema "roles" do
     field :role_name, :string
     has_many :resources, Cockpit.Roles.RoleResource
+    has_one :api_key, Cockpit.Roles.ApiKey
 
     timestamps()
   end

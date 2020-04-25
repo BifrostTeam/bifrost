@@ -295,7 +295,7 @@ defmodule Cockpit.Roles do
   end
 
   def get_policy_document(role_id) do
-    Repo.all(from r in Role, where: r.id == ^role_id, preload: [:resources, resources: :actions])
+    Repo.one(from r in Role, where: r.id == ^role_id, preload: [:resources, resources: :actions])
   end
 
   alias Cockpit.Roles.ApiKey

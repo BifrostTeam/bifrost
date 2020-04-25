@@ -20,8 +20,11 @@ defmodule CockpitWeb.Router do
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", CockpitWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", CockpitWeb.API do
+    pipe_through :api
+
+    scope "/allocations", nil do
+      get "/", AllocationsController, :list_allocations
+    end
+  end
 end
