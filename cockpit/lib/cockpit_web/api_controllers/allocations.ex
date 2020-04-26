@@ -8,7 +8,7 @@ defmodule CockpitWeb.API.AllocationsController do
   @endpoint "allocations"
 
   def list_allocations(conn, _params) do
-    Auth.authorized conn, @endpoint, "*", "List" do
+    Auth.authorized conn, @endpoint, "List", "*" do
       render(conn, "allocations.json", %{allocations: Cockpit.Allocations.list_allocation_prefix()})
     end
   end

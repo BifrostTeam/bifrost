@@ -14,6 +14,20 @@ defmodule Cockpit.Allocations.Allocation do
     allocation
     |> cast(attrs, [:cidr_prefix])
     |> validate_required([:cidr_prefix])
+    |> validate_cidr
     |> unique_constraint(:cidr_prefix)
+  end
+
+  def validate_cidr(changeset) do
+    case changeset do
+      %Ecto.Changeset{valid?: true, changes: %{cidr_prefix: cidr_prefix}} ->
+        if CIDR.is_cidr?(cidr_prefix) do
+          changeset
+        else
+          add_error(changeset, :cidr_prefix, "invalid")
+        end
+      _ ->
+        changeset
+    end
   end
 end

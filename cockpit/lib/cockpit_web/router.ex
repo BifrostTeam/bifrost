@@ -15,6 +15,7 @@ defmodule CockpitWeb.Router do
   end
 
   pipeline :dashboard do
+    plug :browser
     plug CockpitWeb.Auth.LoginRequired
   end
 
@@ -23,19 +24,18 @@ defmodule CockpitWeb.Router do
 
     get "/", PageController, :index
     post "/", PageController, :login
+  end
 
-    scope "/dashboard", nil do
-      pipe_through :dashboard
+  scope "/dashboard", CockpitWeb do
+    pipe_through :dashboard
 
-      get "/", DashboardController, :index
-    end
+    get "/", DashboardController, :index
+    get "/game_servers", GameServerController, :list
   end
 
   scope "/api", CockpitWeb.API do
     pipe_through :api
 
-    scope "/allocations", nil do
-      get "/", AllocationsController, :list_allocations
-    end
+    get "/allocations", AllocationsController, :list_allocations
   end
 end

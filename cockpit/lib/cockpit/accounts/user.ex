@@ -6,7 +6,8 @@ defmodule Cockpit.Accounts.User do
     field :email, :string
     field :name, :string
     field :password, :string
-    has_one :role, Cockpit.Accounts.UserRole
+    has_one :user_role, Cockpit.Accounts.UserRole
+    has_one :role, through: [:user_role, :role]
 
     timestamps()
   end

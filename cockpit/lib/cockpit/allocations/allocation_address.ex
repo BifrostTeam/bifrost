@@ -14,6 +14,20 @@ defmodule Cockpit.Allocations.AllocationAddress do
     allocation_address
     |> cast(attrs, [:address, :allocation_id])
     |> validate_required([:address, :allocation_id])
+    |> validate_in_cidr
     |> unique_constraint(:address)
+  end
+
+  def validate_in_cidr(changeset) do
+    case changeset do
+      %Ecto.Changeset{valid?: true, changes: %{address: address}} ->
+        allocation_id = fetch_change!(changeset, :allocation_id)
+        allocation = Cockpit.Repo.get!(Cockpit.Allocations.Allocation, allocation_id)
+        case CIDR.match(CIDR.parse(allocation.cidr_prefix), address) do
+          {:ok, true} -> changeset
+          _ -> add_error(changeset, :address, "not in cidr prefix")
+        end
+      _ -> changeset
+    end
   end
 end
