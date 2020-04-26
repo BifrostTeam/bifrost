@@ -92,22 +92,18 @@
                                     <thead>
                                         <tr>
                                             <th>Server Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
+                                            <th>Host IP</th>
+                                            <th>Host Port</th>
+                                            <th>Public Address</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <%= for gameserver <- @game_servers do %>
                                         <tr>
-                                            <th><%= gameserver.name %></th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
+                                            <th><%= gameserver.server_name %></th>
+                                            <th><%= gameserver.host_ip %></th>
+                                            <th><%= gameserver.host_port %></th>
+                                            <th><%= gameserver.allocation.address %></th>
                                         </tr>
                                         <% end %>
                                     </tbody>

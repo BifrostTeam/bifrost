@@ -9,7 +9,7 @@ defmodule CockpitWeb.GameServerController do
 
   def list(conn, _params) do
     Auth.authorized conn, @endpoint, "List", "*" do
-      render(conn, "game_server_list.html", %{game_servers: GameServers.list_game_server()})
+      render(conn, "game_server_list.html", %{game_servers: GameServers.list_game_server() |> Cockpit.Repo.preload(:allocation)})
     end
   end
 end

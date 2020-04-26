@@ -3,7 +3,7 @@ defmodule Cockpit.GameServers.GameServerAllocation do
   import Ecto.Changeset
 
   schema "game_server_allocations" do
-    belongs_to :allocation_address, Cockpit.GameServers.GameServerAllocation
+    belongs_to :allocation_address, Cockpit.Allocations.AllocationAddress
     belongs_to :game_server, Cockpit.GameServers.GameServer
 
     timestamps()
