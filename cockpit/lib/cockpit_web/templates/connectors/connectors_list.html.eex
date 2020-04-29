@@ -98,12 +98,12 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <%= for gameserver <- @game_servers do %>
+                                        <%= for connector <- @connectors do %>
                                         <tr>
-                                            <th><%= gameserver.server_name %></th>
-                                            <th><%= gameserver.host_ip %></th>
-                                            <th><%= gameserver.host_port %></th>
-                                            <th><%= gameserver.allocation.address %></th>
+                                            <th><%= connector.server_name %></th>
+                                            <th><%= connector.host_ip %></th>
+                                            <th><%= connector.host_port %></th>
+                                            <th><%= connector.allocation.address %></th>
                                         </tr>
                                         <% end %>
                                     </tbody>

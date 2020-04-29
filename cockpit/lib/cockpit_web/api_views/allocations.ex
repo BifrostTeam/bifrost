@@ -8,6 +8,6 @@ defmodule CockpitWeb.API.AllocationsView do
   end
 
   def render("allocations.json", %{allocations: allocations} = _params) do
-    %{data: render_many(allocations, CockpitWeb.API.AllocationsView, "allocation.json", as: :allocation)}
+    render_many(allocations, CockpitWeb.API.AllocationsView, "allocation.json", as: :allocation)
   end
 end

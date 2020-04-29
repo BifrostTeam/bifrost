@@ -14,6 +14,10 @@ defmodule CockpitWeb.ErrorView do
     Phoenix.Controller.status_message_from_template(template)
   end
 
+  def render("404.json", _assigns) do
+    %{error: "Not found"}
+  end
+
   def render("401.json", _assigns) do
     %{error: "401 Unauthorized"}
   end

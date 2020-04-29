@@ -1,8 +1,8 @@
-defmodule Cockpit.Repo.Migrations.CreateGameServer do
+defmodule Cockpit.Repo.Migrations.CreateConnectors do
   use Ecto.Migration
 
   def change do
-    create table(:game_server) do
+    create table(:connectors) do
       add :host_ip, :string
       add :host_port, :integer
       add :server_name, :string
@@ -10,6 +10,6 @@ defmodule Cockpit.Repo.Migrations.CreateGameServer do
       timestamps()
     end
 
-    create unique_index(:game_server, [:host_ip, :host_port])
+    create unique_index(:connectors, [:host_ip, :host_port])
   end
 end

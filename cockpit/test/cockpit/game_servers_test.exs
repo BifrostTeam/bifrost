@@ -122,4 +122,61 @@ defmodule Cockpit.GameServersTest do
       assert %Ecto.Changeset{} = GameServers.change_game_server_allocation(game_server_allocation)
     end
   end
+
+  describe "game_server_roles" do
+    alias Cockpit.GameServers.GameServerRole
+
+    @valid_attrs %{}
+    @update_attrs %{}
+    @invalid_attrs %{}
+
+    def game_server_role_fixture(attrs \\ %{}) do
+      {:ok, game_server_role} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> GameServers.create_game_server_role()
+
+      game_server_role
+    end
+
+    test "list_game_server_roles/0 returns all game_server_roles" do
+      game_server_role = game_server_role_fixture()
+      assert GameServers.list_game_server_roles() == [game_server_role]
+    end
+
+    test "get_game_server_role!/1 returns the game_server_role with given id" do
+      game_server_role = game_server_role_fixture()
+      assert GameServers.get_game_server_role!(game_server_role.id) == game_server_role
+    end
+
+    test "create_game_server_role/1 with valid data creates a game_server_role" do
+      assert {:ok, %GameServerRole{} = game_server_role} = GameServers.create_game_server_role(@valid_attrs)
+    end
+
+    test "create_game_server_role/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = GameServers.create_game_server_role(@invalid_attrs)
+    end
+
+    test "update_game_server_role/2 with valid data updates the game_server_role" do
+      game_server_role = game_server_role_fixture()
+      assert {:ok, %GameServerRole{} = game_server_role} = GameServers.update_game_server_role(game_server_role, @update_attrs)
+    end
+
+    test "update_game_server_role/2 with invalid data returns error changeset" do
+      game_server_role = game_server_role_fixture()
+      assert {:error, %Ecto.Changeset{}} = GameServers.update_game_server_role(game_server_role, @invalid_attrs)
+      assert game_server_role == GameServers.get_game_server_role!(game_server_role.id)
+    end
+
+    test "delete_game_server_role/1 deletes the game_server_role" do
+      game_server_role = game_server_role_fixture()
+      assert {:ok, %GameServerRole{}} = GameServers.delete_game_server_role(game_server_role)
+      assert_raise Ecto.NoResultsError, fn -> GameServers.get_game_server_role!(game_server_role.id) end
+    end
+
+    test "change_game_server_role/1 returns a game_server_role changeset" do
+      game_server_role = game_server_role_fixture()
+      assert %Ecto.Changeset{} = GameServers.change_game_server_role(game_server_role)
+    end
+  end
 end

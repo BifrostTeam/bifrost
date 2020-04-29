@@ -30,12 +30,14 @@ defmodule CockpitWeb.Router do
     pipe_through :dashboard
 
     get "/", DashboardController, :index
-    get "/game_servers", GameServerController, :list
+    get "/connectors", ConnectorsController, :list
   end
 
   scope "/api", CockpitWeb.API do
     pipe_through :api
 
     get "/allocations", AllocationsController, :list_allocations
+    get "/connectors", ConnectorsController, :list_connectors
+    get "/connectors/:server_id", ConnectorsController, :get_connector_info
   end
 end
