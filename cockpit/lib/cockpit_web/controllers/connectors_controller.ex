@@ -8,7 +8,7 @@ defmodule CockpitWeb.ConnectorsController do
   @endpoint "connectors"
 
   def list(conn, _params) do
-    Auth.authorized conn, @endpoint, "List", "*" do
+    Auth.authorized conn, "List", "*" do
       render(conn, "connectors_list.html", %{connectors: Connectors.list_connector() |> Cockpit.Repo.preload(:allocation)})
     end
   end

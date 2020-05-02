@@ -38,6 +38,7 @@ defmodule CockpitWeb.Router do
 
     get "/allocations", AllocationsController, :list_allocations
     get "/connectors", ConnectorsController, :list_connectors
+    get "/connectors/myself", ConnectorsController, :get_own_info
     get "/connectors/:server_id", ConnectorsController, :get_connector_info
   end
 end

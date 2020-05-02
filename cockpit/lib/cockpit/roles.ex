@@ -334,7 +334,7 @@ defmodule Cockpit.Roles do
 
   Returns `nil` if the API key does not exist.
   """
-  def get_api_key(key_id), do: Repo.one(from k in ApiKey, where: k.key_id == ^key_id)
+  def get_api_key(key_id), do: Repo.one(from k in ApiKey, where: k.key_id == ^key_id, preload: [:role])
 
   @doc """
   Creates a api_key.
@@ -352,6 +352,13 @@ defmodule Cockpit.Roles do
     %ApiKey{}
     |> ApiKey.changeset(attrs)
     |> Repo.insert()
+  end
+
+  def generate_api_key(%Role{} = role) do
+    key_id = Base.encode16(:crypto.strong_rand_bytes(10))
+    key = Base.encode64(:crypto.strong_rand_bytes(48))
+
+    create_api_key(%{key_id: key_id, key: key, role_id: role.id})
   end
 
   @doc """

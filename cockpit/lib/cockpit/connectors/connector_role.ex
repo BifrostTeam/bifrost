@@ -14,5 +14,6 @@ defmodule Cockpit.Connectors.ConnectorRole do
     connector_role
     |> cast(attrs, [:role_id, :connector_id])
     |> validate_required([:role_id, :connector_id])
+    |> unique_constraint([:role_id, :connector_id])
   end
 end

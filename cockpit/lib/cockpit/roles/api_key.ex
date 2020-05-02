@@ -5,7 +5,7 @@ defmodule Cockpit.Roles.ApiKey do
   schema "role_keys" do
     field :key, :string
     field :key_id, :string
-    field :role_id, :id
+    belongs_to :role, Cockpit.Roles.Role
 
     timestamps()
   end

@@ -29,4 +29,5 @@
 
 {:ok, connector} = Cockpit.Connectors.create_connector(%{server_name: "bhop", host_ip: "192.168.1.2", host_port: 1337})
 {:ok, _} = Cockpit.Connectors.create_connector_allocation(%{connector_id: connector.id, allocation_address_id: address.id})
-{:ok, _} = Cockpit.Connectors.create_default_connector_role(connector)
+{:ok, role} = Cockpit.Connectors.create_default_connector_role(connector)
+{:ok, _} = Cockpit.Roles.generate_api_key(role)

@@ -201,6 +201,7 @@ defmodule Cockpit.Connectors do
   def create_default_connector_role(%Connector{} = connector) do
     self_rn = "rn:connectors:#{connector.id}"
     {:ok, role} = Cockpit.Roles.create_role(%{role_name: "connector_#{connector.id}_role"})
+    {:ok, _} = create_connector_role(%{role_id: role.id, connector_id: connector.id})
     {:ok, role_resource} = Cockpit.Roles.create_role_resource(%{resource_ident: self_rn, role_id: role.id})
     {:ok, _} = Cockpit.Roles.create_role_resource_action(%{role_resource_id: role_resource.id, action: "GetInfo", effect: "allow"})
 
@@ -208,5 +209,17 @@ defmodule Cockpit.Connectors do
     {:ok, _} = Cockpit.Roles.create_role_resource_action(%{role_resource_id: role_resource.id, action: "List", effect: "allow"})
 
     {:ok, role}
+  end
+
+  alias Cockpit.Connectors.ConnectorRole
+
+  def create_connector_role(attrs \\ %{}) do
+    %ConnectorRole{}
+    |> ConnectorRole.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def get_connector_role!(role_id) do
+    Repo.one!(from c in ConnectorRole, where: c.role_id == ^role_id, preload: [:connector])
   end
 end
